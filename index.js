@@ -13,9 +13,11 @@ const PORT = 8800;
 dotenv.config();
 
 //mongo DB connection using mongoose
-mongoose.connect(process.env.MONGO_URL, () => {
-    console.log("");
-})
+mongoose.connect( process.env.MONGO_URL,  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true  })   
+.then(() => console.log("Database connected!"))
+.catch(err => console.log(err));
 
 //middleware
 app.use(express.json())
@@ -30,7 +32,7 @@ app.get("/", (req,res) => {
 app.use("/api/users", userRoutes)
 app.use("/api/auth", authRoutes)
 
-// Server Listening porauth
+// Server Listening port 8800
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 })
